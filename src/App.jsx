@@ -1,7 +1,4 @@
-import Button from './components/Button/Button';
 import './App.css';
-import JournalItem from './components/JournalItem/JournalItem';
-import CardButton from './components/CardButton/CardButton';
 import LeftPanel from './layout/LeftPanel/LeftPanel';
 import Body from './layout/Body/Body';
 import Header from './components/Header/Header';
@@ -27,7 +24,7 @@ function App() {
 		// 	text: 'Думал что очень много времени',
 		// 	date: new Date()
 		// }
-	];
+	]; 
 
 	const [items, setItems] = useState(INITIAL_DATA);
 	const addItem = (newItems) => {
@@ -39,34 +36,12 @@ function App() {
 		}]);
 	};
 
-	const sortItems = (a, b) => {
-		if (a.date > b.date){
-			return -1;
-		}
-		else {
-			return 1;
-		}
-	};
-
 	return (
 		<div className='app'>
 		  <LeftPanel>
 				<Header/>
 				<JournalAddButton/>
-				<JournalList>
-					{items.length == 0 && <p>Записей пока нет, добавьте первую</p>}
-					{items.length > 0 && items.sort(sortItems).map((el) => (
-						<CardButton key={el.id}>
-							<JournalItem
-								title = {el.title}
-								text = {el.text}
-								date = {el.date}
-							/>
-						</CardButton>
-					))}
-					
-					
-				</JournalList>
+				<JournalList 	items={items} />
 			</LeftPanel>
 
 			<Body>
@@ -74,7 +49,6 @@ function App() {
 					onSubmit = {addItem}
 				/>
 			</Body>
-		
 		</div>
 	);
 }
