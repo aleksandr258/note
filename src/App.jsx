@@ -29,8 +29,9 @@ function App() {
 
 	const addItem = (newItems) => {
 		setItems(oldItems => [...oldItems, {
-			text: newItems.text,
 			title: newItems.title,
+			tag: newItems.tag,
+			post: newItems.post,
 			date: new Date(newItems.date),
 			id: Math.max(...oldItems.map(e => e.id)) + 1
 		}]);

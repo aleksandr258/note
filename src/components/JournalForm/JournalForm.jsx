@@ -7,35 +7,45 @@ import { useState } from 'react';
 function JournalForm({onSubmit}) {
 	const [formValidState, setFormValidState] = useState({
 		title: true,
-		text: true,
-		date: true
+		post: true,
+		date: true,
+		tag: true
 	});
 
 	const addJournalItem = (e) => {
 		e.preventDefault();
 		const formData = new FormData(e.target);
 		const formProps = Object.fromEntries(formData);
+		console.log(formProps);
 		let isFormValid = true;
+		
 		if (formProps.title?.trim().length == 0){
 			setFormValidState(state => ({...state, title: false}));
 			isFormValid = false;
 		} else {
 			setFormValidState(state => ({...state, title: true}));
-			isFormValid = true;
+			
 		}
-		if (formProps.text?.trim().length == 0){
-			setFormValidState(state => ({...state, text: false}));
+		if (formProps.tag?.trim().length == 0){
+			setFormValidState(state => ({...state, tag: false}));
 			isFormValid = false;
+			
 		} else {
-			setFormValidState(state => ({...state, text: true}));
-			isFormValid = true;
+			setFormValidState(state => ({...state, tag: true}));
+			
+		}
+		if (formProps.post?.trim().length == 0){
+			setFormValidState(state => ({...state, post: false}));
+		
+		} else {
+			setFormValidState(state => ({...state, post: true}));
+	
 		}
 		if (!formProps.date){
 			setFormValidState(state => ({...state, date: false}));
 			isFormValid = false;
 		}else {
 			setFormValidState(state => ({...state, date: true}));
-			isFormValid = true;
 		}
 		if (!isFormValid){
 			return;
@@ -65,11 +75,11 @@ function JournalForm({onSubmit}) {
 					<span>Метки</span>
 				</label>
 				<input type='text' id='tag' name='tag' className={cn(styles['input-title'], {
-					[styles['invalid']]: !formValidState.title
+					[styles['invalid']]: !formValidState.tag
 				})} />  
 			</div> 			
 			
-			<textarea name="text" id="" className={`${styles['input']} ${formValidState.text ? '' : styles['invalid']}`}></textarea>
+			<textarea name="post" id="" className={`${styles['input']} ${formValidState.post ? '' : styles['invalid']}`}></textarea>
 			<Button text={'Сохранить'}/>
 		</form>
 
