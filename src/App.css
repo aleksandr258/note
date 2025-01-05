@@ -1,4 +1,7 @@
 .app {
   display: flex;
+  height: 100%;
   padding: 30px;
+  background: #181818;
+  
 }
