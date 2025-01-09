@@ -5,7 +5,7 @@ import JournalItem from '../JournalItem/JournalItem';
 
 
 function JournalList({items}) {
-	console.log(items);
+
 	const sortItems = (a, b) => {
 		if (a.date > b.date){
 			return -1;
