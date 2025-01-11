@@ -5,7 +5,7 @@ import JournalItem from '../JournalItem/JournalItem';
 
 
 function JournalList({items}) {
-	console.log(items);
+
 	const sortItems = (a, b) => {
 		if (a.date > b.date){
 			return -1;
@@ -25,7 +25,8 @@ function JournalList({items}) {
 				<CardButton key={el.id}>
 					<JournalItem
 						title={el.title}
-						text={el.text}
+						tag={el.tag}
+						post={el.post}
 						date={el.date}
 					/>
 				</CardButton>

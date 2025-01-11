@@ -1,10 +1,10 @@
 import './JournalItem.css';
 
-function JournalItem({text, title, date}) {
+function JournalItem({post, title, date}) {
 	const formatedDate = new Intl.DateTimeFormat('RU-ru').format(date);
-	console.log(date); 
+	console.log(post); 
 	const maxLength = 30;
-	const trimmedText = text.slice(0, maxLength) + '...';
+	const trimmedText = post.slice(0, maxLength) + '...';
 
 
 	return (
