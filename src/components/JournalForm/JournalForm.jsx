@@ -12,6 +12,10 @@ function JournalForm({onSubmit}) {
 	const [formState, dispatchForm] = useReducer(formReducer, INITIAL_STATE);
 	const {isValid, isFormReadyToSubmit, values} =  formState;
 	useEffect(() => {
+		
+		console.log(isValid.date);
+	}, [isValid.date]);
+	useEffect(() => {
 		let timerId; 
 		 if (!isValid.date || !isValid.post || !isValid.title || !isValid.tag){
 			timerId = setTimeout(() => {
@@ -50,7 +54,7 @@ function JournalForm({onSubmit}) {
 					<span>Дата</span>
 				</label>
 				<input type="date" id='date' name='date' className={cn(styles['input-title'], {
-					[styles['invalid']]: !isValid.date
+					[styles['invalid']]: !isValid.data
 				})}/>
 			</div>
 			<div className={styles['form-row']}>
@@ -63,7 +67,7 @@ function JournalForm({onSubmit}) {
 				})} />  
 			</div> 			
 			
-			<textarea name="post" id="" className={`${styles['input']} ${!isValid.post ? '' : styles['invalid']}`}></textarea>
+			<textarea name="post" id="" className={`${styles['input']} ${isValid.post ? '' : styles['invalid']}`}></textarea>
 			<Button text={'Сохранить'}/>
 		</form>
  

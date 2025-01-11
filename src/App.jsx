@@ -38,6 +38,7 @@ function App() {
 			date: new Date(newItems.date),
 			id: Math.max(...oldItems.map(e => e.id)) + 1
 		}]);
+		console.log(items);
 	};
 
 	return (
