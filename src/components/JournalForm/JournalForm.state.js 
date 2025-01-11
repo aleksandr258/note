@@ -6,10 +6,10 @@ export const INITIAL_STATE = {
 		date: true 
 	},
 	values: {
-		post:  undefined,
-		title: undefined,
-		tag: undefined,
-		date: undefined, 
+		post:  '',
+		title: '',
+		tag: '',
+		date: '', 
 	},
 	isFormReadyToSubmit: false
 };
@@ -18,6 +18,16 @@ export function formReducer(state, action){
 	switch(action.type){
 		case ('RESET_VALIDITY'):
 			return {...state, isValid: INITIAL_STATE.isValid}    
+		case ('UPDATE_VALUE'): {
+			const { name, value } = action.payload; // Динамическое обновление по name
+      return {
+        ...state,
+        values: {
+          ...state.values,
+          [name]: value, // Обновляем конкретное поле (title, date, tag или post)
+        },
+      };
+		}
 		case ('SUBMIT'): {
 			const titleValidity =  action.payload.title?.trim().length;
 			const postValidity = action.payload.post?.trim().length;
@@ -34,6 +44,8 @@ export function formReducer(state, action){
 				isFormReadyToSubmit: postValidity && titleValidity && tagValidity && dateValidity
 			}
 		}
+		case ('CLEAR_FORM'): 
+			return{...state, values: INITIAL_STATE.values}
 	}
 
 }
