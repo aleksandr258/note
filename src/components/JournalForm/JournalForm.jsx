@@ -37,7 +37,6 @@ function JournalForm({onSubmit}) {
 		e.preventDefault();
 		const formData = new FormData(e.target);
 		const formProps = Object.fromEntries(formData);
-		console.log(isValid);
 		dispatchForm({type: 'SUBMIT', payload: formProps });
 	};
 
@@ -54,7 +53,7 @@ function JournalForm({onSubmit}) {
 					<span>Дата</span>
 				</label>
 				<input type="date" id='date' name='date' className={cn(styles['input-title'], {
-					[styles['invalid']]: !isValid.data
+					[styles['invalid']]: !isValid.date
 				})}/>
 			</div>
 			<div className={styles['form-row']}>

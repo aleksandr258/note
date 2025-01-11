@@ -3,13 +3,13 @@ export const INITIAL_STATE = {
 		post: true,
 		title: true,
 		tag: true,
-		data: true 
+		date: true 
 	},
 	values: {
 		post:  undefined,
 		title: undefined,
 		tag: undefined,
-		data: undefined, 
+		date: undefined, 
 	},
 	isFormReadyToSubmit: false
 };
@@ -29,7 +29,7 @@ export function formReducer(state, action){
 					post: postValidity,
 					title: titleValidity,
 					tag: tagValidity,
-					data: dateValidity 
+					date: dateValidity 
 				},
 				isFormReadyToSubmit: postValidity && titleValidity && tagValidity && dateValidity
 			}
