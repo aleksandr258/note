@@ -11,10 +11,7 @@ import { INITIAL_STATE }  from './JournalForm.state.js ';
 function JournalForm({onSubmit}) {
 	const [formState, dispatchForm] = useReducer(formReducer, INITIAL_STATE);
 	const {isValid, isFormReadyToSubmit, values} =  formState;
-	useEffect(() => {
-		
-		console.log(isValid.date);
-	}, [isValid.date]);
+
 	useEffect(() => {
 		let timerId; 
 		 if (!isValid.date || !isValid.post || !isValid.title || !isValid.tag){
@@ -27,24 +24,28 @@ function JournalForm({onSubmit}) {
 		 });
 	}, [isValid]);
 
+	const handleInputChange = (e) => {
+		dispatchForm({type: 'SET_VALUE', payload: {[e.target.name]: e.target.value}});
+
+	};
+
 	useEffect(() => {
 		if (isFormReadyToSubmit){
 			onSubmit(values);
+			dispatchForm({type: 'CLEAR_FORM'});
 		}
 	}, [isFormReadyToSubmit] );
 
 	const addJournalItem = (e) => {
 		e.preventDefault();
-		const formData = new FormData(e.target);
-		const formProps = Object.fromEntries(formData);
-		console.log(isValid);
-		dispatchForm({type: 'SUBMIT', payload: formProps });
+		dispatchForm({type: 'SUBMIT'});
+		
 	};
 
 	return (
 		<form action="" className={styles['journal-form']} onSubmit={addJournalItem}>
 			<div className={styles['title-wrap']}>
-				<input type="text" name='title' className={cn(styles['input-title'], {
+				<input type="text" name='title' value={values.title} onChange={handleInputChange} className={cn(styles['input-title'], {
 					[styles['invalid']]: !isValid.title
 				})}/>
 			</div>
@@ -53,8 +54,8 @@ function JournalForm({onSubmit}) {
 					<img src="date.svg" alt="icon date" className={styles['icon']}/>
 					<span>Дата</span>
 				</label>
-				<input type="date" id='date' name='date' className={cn(styles['input-title'], {
-					[styles['invalid']]: !isValid.data
+				<input type="date" id='date' name='date' value={values.date} onChange={handleInputChange} className={cn(styles['input-title'], {
+					[styles['invalid']]: !isValid.date
 				})}/>
 			</div>
 			<div className={styles['form-row']}>
@@ -62,12 +63,14 @@ function JournalForm({onSubmit}) {
 					<img src="tag-icon.svg" alt="icon folder " className={styles['icon']}/>
 					<span>Метки</span>
 				</label>
-				<input type='text' id='tag' name='tag' className={cn(styles['input-title'], {
+				<input type='text' id='tag' name='tag' value={values.tag} onChange={handleInputChange} className={cn(styles['input-title'], {
 					[styles['invalid']]: !isValid.tag
 				})} />  
 			</div> 			
 			
-			<textarea name="post" id="" className={`${styles['input']} ${isValid.post ? '' : styles['invalid']}`}></textarea>
+			<textarea name="post" id="" value={values.post} onChange={handleInputChange} className={cn(styles['input-title'], {
+				[styles['invalid']]: !isValid.post
+			})}/>
 			<Button text={'Сохранить'}/>
 		</form>
  
