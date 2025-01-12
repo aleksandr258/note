@@ -25,8 +25,7 @@ function JournalForm({onSubmit}) {
 	}, [isValid]);
 
 	const handleInputChange = (e) => {
-		const {value, name} = e.target;
-		dispatchForm({type: 'UPDATE_VALUE', payload: {name, value}});
+		dispatchForm({type: 'SET_VALUE', payload: {[e.target.name]: e.target.value}});
 
 	};
 
@@ -39,9 +38,7 @@ function JournalForm({onSubmit}) {
 
 	const addJournalItem = (e) => {
 		e.preventDefault();
-		const formData = new FormData(e.target);
-		const formProps = Object.fromEntries(formData);
-		dispatchForm({type: 'SUBMIT', payload: formProps });
+		dispatchForm({type: 'SUBMIT'});
 		
 	};
 
@@ -57,7 +54,7 @@ function JournalForm({onSubmit}) {
 					<img src="date.svg" alt="icon date" className={styles['icon']}/>
 					<span>Дата</span>
 				</label>
-				<input type="date" id='date' name='date' value={values.date} className={cn(styles['input-title'], {
+				<input type="date" id='date' name='date' value={values.date} onChange={handleInputChange} className={cn(styles['input-title'], {
 					[styles['invalid']]: !isValid.date
 				})}/>
 			</div>
@@ -66,12 +63,12 @@ function JournalForm({onSubmit}) {
 					<img src="tag-icon.svg" alt="icon folder " className={styles['icon']}/>
 					<span>Метки</span>
 				</label>
-				<input type='text' id='tag' name='tag' value={values.tag} className={cn(styles['input-title'], {
+				<input type='text' id='tag' name='tag' value={values.tag} onChange={handleInputChange} className={cn(styles['input-title'], {
 					[styles['invalid']]: !isValid.tag
 				})} />  
 			</div> 			
 			
-			<textarea name="post" id="" value={values.post} className={cn(styles['input-title'], {
+			<textarea name="post" id="" value={values.post} onChange={handleInputChange} className={cn(styles['input-title'], {
 				[styles['invalid']]: !isValid.post
 			})}/>
 			<Button text={'Сохранить'}/>
