@@ -34,7 +34,7 @@ function JournalForm({onSubmit}) {
 			onSubmit(values);
 			dispatchForm({type: 'CLEAR_FORM'});
 		}
-	}, [isFormReadyToSubmit] );
+	}, [isFormReadyToSubmit, values, onSubmit] );
 
 	const addJournalItem = (e) => {
 		e.preventDefault();
