@@ -38,7 +38,7 @@ export function formReducer(state, action){
 			}
 		}
 		case ('CLEAR_FORM'): 
-			return{...state, values: INITIAL_STATE.values}
+			return{...state, values: INITIAL_STATE.values, isFormReadyToSubmit: false}
 	}
 
 }
