@@ -30,12 +30,7 @@
 		gap: 20px;
 
 		min-width: 150  px;
-}
-
-.invalid {
-	border: 1px solid red;
-	background: rgba(64, 8, 8, 0.799) ;
-	}     
+}  
 	
 .input {
 		border: none;
@@ -48,4 +43,8 @@
 		border-bottom: 1px solid #323232;
 		width: 100%;
 }
-	
+
+.invalid {
+	border: 1px solid red ;
+	background: rgba(64, 8, 8, 0.799) ;
+	}   
