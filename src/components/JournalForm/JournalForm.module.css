@@ -18,28 +18,11 @@
 	
 }
 
-.input {
-	border: none;
-	background: none ; 
-	font-size: 14px;
-	font-weight: 600;
-	border-bottom: solid 1px #2c2b2b; 
-  width: 100%;
-}
 
 .icon {
   padding-right: 20px;
 }
 
-.input-title {
-	border: none;
-	background: none ;
-	outline: none;
-	/* font-size: 32px;
-	font-weight: 600; */
-	width: 100%;
-	border-bottom: solid 1px #2c2b2b;
-}
 
 .form-label {
 	  display: flex;
@@ -52,5 +35,17 @@
 .invalid {
 	border: 1px solid red;
 	background: rgba(64, 8, 8, 0.799) ;
-	}    
+	}     
+	
+.input {
+		border: none;
+		background: none;
+		font-size: 14px;
+		font-style: normal;
+		font-weight: 600;
+		line-height: normal;
+		font-family: 'Source Sans 3', sans-serif;
+		border-bottom: 1px solid #323232;
+		width: 100%;
+}
 	

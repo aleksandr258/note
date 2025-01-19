@@ -4,7 +4,7 @@ import Button from '../Button/Button';
 import { useEffect, useReducer, useRef } from 'react';
 import { formReducer } from './JournalForm.state.js ';
 import { INITIAL_STATE }  from './JournalForm.state.js ';
-
+import Input from '../Input/Input';
    
 
 
@@ -61,6 +61,7 @@ function JournalForm({onSubmit}) {
 
 	const addJournalItem = (e) => {
 		e.preventDefault();
+		console.log(isValid);
 		dispatchForm({type: 'SUBMIT'});
 		
 	};
@@ -68,7 +69,7 @@ function JournalForm({onSubmit}) {
 	return (
 		<form action="" className={styles['journal-form']} onSubmit={addJournalItem}>
 			<div className={styles['title-wrap']}>
-				<input type="text" name='title' ref={titleRef} value={values.title} onChange={handleInputChange} className={cn(styles['input-title'], {
+				<Input type="text" name='title' ref={titleRef} isValid={isValid.title} appearance = {'title'} value={values.title} onChange={handleInputChange} className={cn(styles['input-title'], {
 					[styles['invalid']]: !isValid.title
 				})}/>
 			</div>
@@ -77,7 +78,7 @@ function JournalForm({onSubmit}) {
 					<img src="date.svg" alt="icon date" className={styles['icon']}/>
 					<span>Дата</span>
 				</label>
-				<input type="date" id='date' name='date' ref={dateRef} value={values.date} onChange={handleInputChange} className={cn(styles['input-title'], {
+				<Input type="date" id='date' name='date' ref={dateRef} isValid={isValid.date} value={values.date} onChange={handleInputChange} className={cn(styles['input-title'], {
 					[styles['invalid']]: !isValid.date
 				})}/>
 			</div>
@@ -86,12 +87,12 @@ function JournalForm({onSubmit}) {
 					<img src="tag-icon.svg" alt="icon folder " className={styles['icon']}/>
 					<span>Метки</span>
 				</label>
-				<input type='text' id='tag' name='tag' ref={tagRef} value={values.tag} onChange={handleInputChange} className={cn(styles['input-title'], {
+				<Input type='text' id='tag' name='tag' ref={tagRef} isValid={isValid.tag} value={values.tag} onChange={handleInputChange} className={cn(styles['input-title'], {
 					[styles['invalid']]: !isValid.tag
 				})} />  
-			</div> 			
+			</div> 			 
 			
-			<textarea name="post" id="" ref={postRef} value={values.post} onChange={handleInputChange} className={cn(styles['input-title'], {
+			<textarea name="post" id="" ref={postRef} value={values.post} onChange={handleInputChange} className={cn(styles['input'], {
 				[styles['invalid']]: !isValid.post
 			})}/>
 			<Button text={'Сохранить'}/>
