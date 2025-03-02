@@ -6,7 +6,8 @@ import JournalList from './components/JournalList.jsx/JournalList';
 import JournalAddButton from './components/JournalAdd/JournalAdd';
 import JournalForm from './components/JournalForm/JournalForm';
 import { useLocalStorage } from './components/Hooks/ use-localstorage.hook';
-
+import { UserContext, UserContextProvider } from './context/user.context';
+import { useState } from 'react';
 
 
 function App() { 
@@ -25,28 +26,29 @@ function App() {
 
 	const addItem = (item) => {
 		setItems([...mapItems(items), {
-			title: item.title, 
-			tag: item.tag, 
-			post: item.post,
-			date: new Date(item.date),
+			...item,
 			id: items.length > 0 ? Math.max(...items.map(e => e.id)) + 1 : 1
 		}]);
 	}; 
 
 	return (
-		<div className='app'>
+		<>
+			<UserContextProvider>
+				<div className='app'>
 		  <LeftPanel>
-				<Header/>
-				<JournalAddButton/>
-				<JournalList 	items={mapItems(items)} />
-			</LeftPanel>
+						<Header/>
+						<JournalAddButton/>
+						<JournalList 	items={mapItems(items)} />
+					</LeftPanel>
 
-			<Body>
-				<JournalForm
-					onSubmit = {addItem}
-				/>
-			</Body>
-		</div>
+					<Body>
+						<JournalForm
+							onSubmit = {addItem}
+						/>
+					</Body>
+				</div>
+			</UserContextProvider>
+		</>
 	);
 }
 
