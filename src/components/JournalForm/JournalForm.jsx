@@ -82,7 +82,7 @@ function JournalForm({onSubmit}) {
 					<img src="date.svg" alt="icon date" className={styles['icon']}/>
 					<span>Дата</span>
 				</label>
-				<Input type="date" id='date' name='date' ref={dateRef} isValid={isValid.date} value={values.date} onChange={handleInputChange} className={cn(styles['input-title'], {
+				<Input type="date" id='date' name='date' ref={dateRef} isValid={isValid.date} value={values.date ? new Date(values.date).toISOString().split('T')[0] : ''}  onChange={handleInputChange} className={cn(styles['input-title'], {
 					[styles['invalid']]: !isValid.date
 				})}/>
 			</div>
