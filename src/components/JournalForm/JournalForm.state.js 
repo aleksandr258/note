@@ -22,10 +22,11 @@ export function formReducer(state, action){
       return {...state, values: {...state.values, ...action.payload},};
 		}
 		case ('SUBMIT'): {
-			const titleValidity =  state.values.title?.trim().length;
-			const postValidity = state.values.post?.trim().length;
-			const tagValidity = state.values.tag?.trim().length;
-			const dateValidity = state.values.date;
+			const titleValidity =  !!state.values.title?.trim().length;
+			const postValidity = !!state.values.post?.trim().length;
+			const tagValidity = !!state.values.tag?.trim().length;
+			const dateValidity = !!state.values.date;
+			console.log(titleValidity)
 		  return {
 				...state,
 				isValid: {
@@ -38,7 +39,8 @@ export function formReducer(state, action){
 			}
 		}
 		case ('CLEAR_FORM'): 
-			return{...state, values: INITIAL_STATE.values}
+		
+			return{...state, values: INITIAL_STATE.values, isFormReadyToSubmit: false}
 	}
 
 }

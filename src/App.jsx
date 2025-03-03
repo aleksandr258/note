@@ -4,57 +4,63 @@ import Body from './layout/Body/Body';
 import Header from './components/Header/Header';
 import JournalList from './components/JournalList.jsx/JournalList';
 import JournalAddButton from './components/JournalAdd/JournalAdd';
-import { useEffect, useState } from 'react';
 import JournalForm from './components/JournalForm/JournalForm';
-
-
+import { useLocalStorage } from './components/Hooks/ use-localstorage.hook';
+import { UserContext, UserContextProvider } from './context/user.context';
+import { useState } from 'react';
 
 
 function App() { 
-	const [items, setItems] = useState([]);
+	const [items, setItems] = useLocalStorage('data');
+	const [selectedItem, setItem] = useState({});
 	 
-	useEffect(() => {
-		const data = JSON.parse(localStorage.getItem('data'));
-		if (data){
-		 setItems(data.map(item => ({
-			 ...item,
-			 date: new Date(item.date)
-		 })));
-		} 
-	},[]);
-	
-	useEffect(() => {
-		if (items.length){
-			localStorage.setItem('data', JSON.stringify(items)); 
+	const mapItems = (items) => {
+		if (!items){
+			return [];
 		}
-	
-	}, [items]);
-
-	const addItem = (newItems) => {
-		setItems(oldItems => [...oldItems, {
-			title: newItems.title,
-			tag: newItems.tag,
-			post: newItems.post,
-			date: new Date(newItems.date),
-			id: Math.max(...oldItems.map(e => e.id)) + 1
-		}]);
-		console.log(items);
+		return items.map(e => ({
+			...e,
+			date: new Date(e.date)
+		}));
 	};
 
-	return (
-		<div className='app'>
-		  <LeftPanel>
-				<Header/>
-				<JournalAddButton/>
-				<JournalList 	items={items} />
-			</LeftPanel>
+	const removeItem = (itemId) => {
+		console.log(itemId);
+		setItems([...mapItems(items).filter(e => e.id !== itemId)]);
+	};
 
-			<Body>
-				<JournalForm
-					onSubmit = {addItem}
-				/>
-			</Body>
-		</div>
+
+	const addItem = (item) => {
+		if (!item.id)	{
+			setItems([...mapItems(items), {
+				...item,
+				id: items.length > 0 ? Math.max(...items.map(e => e.id)) + 1 : 1
+			}]);
+		} else {
+			setItems([...mapItems(items).map(e => e.id === item.id ? {...item, date: new Date(item.date)} : e)]);
+		}
+	}; 
+
+	return (
+		<>
+			<UserContextProvider>
+				<div className='app'>
+		  <LeftPanel>
+						<Header/>
+						<JournalAddButton/>
+						<JournalList 	items={mapItems(items)} setItem={setItem} />
+					</LeftPanel>
+
+					<Body>
+						<JournalForm
+							onSubmit = {addItem}
+							removeItem = {removeItem}
+							data = {selectedItem}
+						/>
+					</Body>
+				</div>
+			</UserContextProvider>
+		</>
 	);
 }
 
