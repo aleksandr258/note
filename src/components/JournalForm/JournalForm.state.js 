@@ -1,44 +1,46 @@
-// export const INITIAL_STATE = {
-// 	isValid: {
-// 		post: true,
-// 		title: true,
-// 		tag: true,
-// 		date: true 
-// 	},
-// 	values: {
-// 		post:  '',
-// 		title: '',
-// 		tag: '',
-// 		date: '', 
-// 	},
-// 	isFormReadyToSubmit: false
-// };
+export const INITIAL_STATE = {
+	isValid: {
+		post: true,
+		title: true,
+		tag: true,
+		date: true 
+	},
+	values: {
+		post:  '',
+		title: '',
+		tag: '',
+		date: '', 
+	},
+	isFormReadyToSubmit: false
+};
 
-// export function formReducer(state, action){
-// 	switch(action.type){
-// 		case ('RESET_VALIDITY'):
-// 			return {...state, isValid: INITIAL_STATE.isValid}    
-// 		case ('SET_VALUE'): {
-//       return {...state, values: {...state.values, ...action.payload},};
-// 		}
-// 		case ('SUBMIT'): {
-// 			const titleValidity =  state.values.title?.trim().length;
-// 			const postValidity = state.values.post?.trim().length;
-// 			const tagValidity = state.values.tag?.trim().length;
-// 			const dateValidity = state.values.date;
-// 		  return {
-// 				...state,
-// 				isValid: {
-// 					post: postValidity,
-// 					title: titleValidity,
-// 					tag: tagValidity,
-// 					date: dateValidity 
-// 				},
-// 				isFormReadyToSubmit: postValidity && titleValidity && tagValidity && dateValidity
-// 			}
-// 		}
-// 		case ('CLEAR_FORM'): 
-// 			return{...state, values: INITIAL_STATE.values, isFormReadyToSubmit: false}
-// 	}
+export function formReducer(state, action){
+	switch(action.type){
+		case ('RESET_VALIDITY'):
+			return {...state, isValid: INITIAL_STATE.isValid}    
+		case ('SET_VALUE'): {
+      return {...state, values: {...state.values, ...action.payload},};
+		}
+		case ('SUBMIT'): {
+			const titleValidity =  !!state.values.title?.trim().length;
+			const postValidity = !!state.values.post?.trim().length;
+			const tagValidity = !!state.values.tag?.trim().length;
+			const dateValidity = !!state.values.date;
+			console.log(titleValidity)
+		  return {
+				...state,
+				isValid: {
+					post: postValidity,
+					title: titleValidity,
+					tag: tagValidity,
+					date: dateValidity 
+				},
+				isFormReadyToSubmit: postValidity && titleValidity && tagValidity && dateValidity
+			}
+		}
+		case ('CLEAR_FORM'): 
+		
+			return{...state, values: INITIAL_STATE.values, isFormReadyToSubmit: false}
+	}
 
-// }
+}

@@ -2,15 +2,17 @@ import cn from 'classnames';
 import styles from './JournalForm.module.css';
 import Button from '../Button/Button';
 import { useContext, useEffect, useReducer, useRef } from 'react';
-// import { formReducer } from './JournalForm.state.js ';
-// import { INITIAL_STATE }  from './JournalForm.state.js ';
+import { formReducer } from './JournalForm.state.js ';
+import { INITIAL_STATE }  from './JournalForm.state.js ';
 import Input from '../Input/Input';
 import { UserContext } from '../../context/user.context';
+
    
 
 
-function JournalForm({onSubmit}) {
-	const {userId, formState, dispatchForm} = useContext(UserContext);
+function JournalForm({onSubmit, data, removeItem}) {
+	const [formState, dispatchForm] = useReducer(formReducer, INITIAL_STATE);
+	const {userId} = useContext(UserContext);
 	const {isValid, isFormReadyToSubmit, values} =  formState;
 	const titleRef = useRef();
 	const dateRef = useRef();
@@ -35,6 +37,10 @@ function JournalForm({onSubmit}) {
 		}
 	
 	};
+
+	useEffect(() => {
+		dispatchForm({type: 'SET_VALUE', payload: {...data}});
+	}, [data]);
 
 	useEffect(() => {
 		let timerId; 
@@ -70,12 +76,22 @@ function JournalForm({onSubmit}) {
 		dispatchForm({type: 'SUBMIT'});
 	};
 
+	const onDeleteItem = () => {
+		console.log(data);
+		dispatchForm({type: 'CLEAR_FORM'});
+		console.log(userId);
+		dispatchForm({type: 'SET_VALUE', payload: {userId}});
+
+		removeItem(data.id);
+	};
+
 	return (
 		<form action="" className={styles['journal-form']} onSubmit={addJournalItem}>
 			<div className={styles['title-wrap']}>
 				<Input type="text" name='title' ref={titleRef} isValid={isValid.title} appearance = {'title'} value={values.title} onChange={handleInputChange} className={cn(styles['input-title'], {
 					[styles['invalid']]: !isValid.title
 				})}/>
+				{ data.id && <Button onClick={() => onDeleteItem()} iconClass={true}>{<img src='delete.svg' alt='delete button'></img>}</Button>}
 			</div>
 			<div className={styles['form-row']}>
 				<label htmlFor="date" className={styles['form-label']}>

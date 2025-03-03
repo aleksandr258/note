@@ -12,6 +12,7 @@ import { useState } from 'react';
 
 function App() { 
 	const [items, setItems] = useLocalStorage('data');
+	const [selectedItem, setItem] = useState({});
 	 
 	const mapItems = (items) => {
 		if (!items){
@@ -23,12 +24,21 @@ function App() {
 		}));
 	};
 
+	const removeItem = (itemId) => {
+		console.log(itemId);
+		setItems([...mapItems(items).filter(e => e.id !== itemId)]);
+	};
+
 
 	const addItem = (item) => {
-		setItems([...mapItems(items), {
-			...item,
-			id: items.length > 0 ? Math.max(...items.map(e => e.id)) + 1 : 1
-		}]);
+		if (!item.id)	{
+			setItems([...mapItems(items), {
+				...item,
+				id: items.length > 0 ? Math.max(...items.map(e => e.id)) + 1 : 1
+			}]);
+		} else {
+			setItems([...mapItems(items).map(e => e.id === item.id ? {...item, date: new Date(item.date)} : e)]);
+		}
 	}; 
 
 	return (
@@ -38,12 +48,14 @@ function App() {
 		  <LeftPanel>
 						<Header/>
 						<JournalAddButton/>
-						<JournalList 	items={mapItems(items)} />
+						<JournalList 	items={mapItems(items)} setItem={setItem} />
 					</LeftPanel>
 
 					<Body>
 						<JournalForm
 							onSubmit = {addItem}
+							removeItem = {removeItem}
+							data = {selectedItem}
 						/>
 					</Body>
 				</div>

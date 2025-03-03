@@ -47,4 +47,8 @@
 .invalid {
 	border: 1px solid red ;
 	background: rgba(64, 8, 8, 0.799) ;
-	}   
+}   
+
+.title-wrap {
+	display: flex;
+}
